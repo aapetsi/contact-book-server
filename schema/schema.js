@@ -11,6 +11,7 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull,
 } = graphql
 
 const ContactType = new GraphQLObjectType({
@@ -39,6 +40,7 @@ const BookType = new GraphQLObjectType({
       type: AuthorType,
       resolve(parent, args) {
         // return _.find(authors, { id: parent.authorId })
+        return Author.findById(parent.authorId)
       },
     },
   }),
@@ -54,6 +56,7 @@ const AuthorType = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve(parent, args) {
         // return _.filter(books, { authorId: parent.id })
+        return Book.find({ authorId: parent.id })
       },
     },
   }),
@@ -68,12 +71,14 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         // code to get data from db / other source
         // return _.find(books, { id: args.id })
+        return Book.findById(args.id)
       },
     },
     books: {
       type: new GraphQLList(BookType),
       resolve(parent, args) {
         // return books
+        return Book.find({})
       },
     },
     author: {
@@ -81,12 +86,13 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         // return _.find(authors, { id: args.id })
+        return Author.findById(args.id)
       },
     },
     authors: {
       type: new GraphQLList(AuthorType),
       resolve(parent, args) {
-        console.log(parent)
+        return Author.find({})
         // return authors
       },
     },
@@ -98,6 +104,97 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(ContactType),
       resolve(parent, args) {
         // return 'hello'
+        return Contact.find({})
+      },
+    },
+  },
+})
+
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve(parent, args) {
+        let author = new Author({
+          name: args.name,
+          age: args.age,
+        })
+        return author.save()
+      },
+    },
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        genre: { type: new GraphQLNonNull(GraphQLString) },
+        authorId: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        let book = new Book({
+          name: args.name,
+          genre: args.genre,
+          authorId: args.authorId,
+        })
+        return book.save()
+      },
+    },
+    addContact: {
+      type: ContactType,
+      args: {
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        lastName: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        email2: { type: GraphQLString },
+        email3: { type: GraphQLString },
+        phone: { type: new GraphQLNonNull(GraphQLInt) },
+        phone2: { type: GraphQLInt },
+        phone3: { type: GraphQLInt },
+        twitter: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        let contact = new Contact({
+          firstName: args.firstName,
+          lastName: args.lastName,
+          email: args.email,
+          email2: args.email2,
+          email3: args.email3,
+          phone: args.phone,
+          phone2: args.phone2,
+          phone3: args.phone3,
+          twitter: args.twitter,
+        })
+        return contact.save()
+      },
+    },
+    editContact: {
+      type: ContactType,
+      args: {
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        lastName: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        email2: { type: GraphQLString },
+        email3: { type: GraphQLString },
+        phone: { type: new GraphQLNonNull(GraphQLInt) },
+        phone2: { type: GraphQLInt },
+        phone3: { type: GraphQLInt },
+        twitter: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        // add edit logic here
+      },
+    },
+    deleteContact: {
+      type: ContactType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Contact.findByIdAndDelete(args.id)
       },
     },
   },
@@ -105,4 +202,5 @@ const RootQuery = new GraphQLObjectType({
 
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation,
 })
