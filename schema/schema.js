@@ -174,6 +174,7 @@ const Mutation = new GraphQLObjectType({
     editContact: {
       type: ContactType,
       args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
         firstName: { type: new GraphQLNonNull(GraphQLString) },
         lastName: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
@@ -185,7 +186,22 @@ const Mutation = new GraphQLObjectType({
         twitter: { type: GraphQLString },
       },
       resolve(parent, args) {
-        // add edit logic here
+        let newContactDetails = {
+          firstName: args.firstName,
+          lastName: args.lastName,
+          email: args.email,
+          email2: args.email2,
+          email3: args.email3,
+          phone: args.phone,
+          phone2: args.phone2,
+          phone3: args.phone3,
+          twitter: args.twitter,
+        }
+        return Contact.findOneAndUpdate(
+          { _id: args.id },
+          { $set: newContactDetails },
+          { new: true }
+        )
       },
     },
     deleteContact: {
@@ -195,6 +211,12 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         return Contact.findByIdAndDelete(args.id)
+      },
+    },
+    deleteContacts: {
+      type: ContactType,
+      resolve(parent, args) {
+        return Contact.deleteMany({})
       },
     },
   },
