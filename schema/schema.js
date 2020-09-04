@@ -197,7 +197,7 @@ const Mutation = new GraphQLObjectType({
           phone3: args.phone3,
           twitter: args.twitter,
         }
-        return Contact.findOneAndUpdate(
+        return Contact.findByIdAndUpdate(
           { _id: args.id },
           { $set: newContactDetails },
           { new: true }
