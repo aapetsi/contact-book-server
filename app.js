@@ -13,6 +13,7 @@ mongoose
   .connect('mongodb://localhost:27017/contacts', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log('MongoDB Connected')
