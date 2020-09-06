@@ -1,27 +1,17 @@
 const express = require('express')
-const mongoose = require('mongoose')
-const { graphqlHTTP } = require('express-graphql')
-const cors = require('cors')
-const schema = require('./schema/schema')
+const path = require('path')
 
 const app = express()
 
-// Cors middleware
-app.use(cors())
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'))
 
-mongoose
-  .connect('mongodb://localhost:27017/contacts', {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useFindAndModify: false,
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
-  .then(() => {
-    console.log('MongoDB Connected')
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+}
 
-app.use('/graphql', graphqlHTTP({ schema, graphiql: true }))
+const port = process.env.PORT || 3000
 
-app.listen(4000, () => console.log(`Server running on port 4000`))
+app.listen(port, () => console.log(`Server running on port ${port}`))
