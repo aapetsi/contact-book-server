@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Input, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import {graphql} from 'react-apollo'
+import { graphql } from 'react-apollo'
 import '../styles/AddContact.css'
 import * as ContactActions from '../store/actions'
 import {addContactMutation} from '../queries/queries'
@@ -24,12 +24,20 @@ const validateMessages = {
   }
 }
 
-const AddContact = () => {
+const AddContact = (props: any) => {
+  
   const dispatch = useDispatch()
   const history = useHistory()
   
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('Success:', values)
+    let {firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter} = values
+    try {
+      let res = await props.mutate({firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter})
+    console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
     dispatch(ContactActions.addContact(values))
     history.push('/')
   }
