@@ -5,14 +5,14 @@ import Contact from './Contact'
 import { getContactsQuery } from '../queries/queries'
 
 
-const ContactList = (props) => {
+const ContactList = (props: any) => {
   // const dispatch = useDispatch()
   // const contactState = useSelector((state) => state.contacts)
   
   const renderContacts = () => {
     let contacts = props.data.contacts
     if (contacts) {
-      return contacts.map(contact => (<Contact key={contact.id} id={contact.id} />))
+      return contacts.map((contact: any) => (<Contact key={contact.id} id={contact.id} />))
     }
   }
   

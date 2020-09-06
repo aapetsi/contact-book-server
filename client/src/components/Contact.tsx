@@ -4,7 +4,7 @@ import React from 'react'
 //   id: string
 // }
 
-const Contact = (props) => {
+const Contact = (props: any) => {
   console.log(props)
   return (
     <div>
