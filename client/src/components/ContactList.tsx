@@ -1,28 +1,28 @@
-import React from 'react'
-// import {useDispatch, useSelector} from 'react-redux'
-import { graphql} from 'react-apollo'
+import React, { useEffect } from 'react'
+import {useQuery} from '@apollo/client'
 import Contact from './Contact'
-import { getContactsQuery } from '../queries/queries'
+import { GET_CONTACTS_QUERY } from '../queries/queries'
 
 
 const ContactList = (props: any) => {
   // const dispatch = useDispatch()
   // const contactState = useSelector((state) => state.contacts)
-  
+  const { loading, data } = useQuery(GET_CONTACTS_QUERY)
   const renderContacts = () => {
-    let contacts = props.data.contacts
-    if (contacts) {
-      return contacts.map((contact: any) => (<Contact key={contact.id} id={contact.id} />))
+    // console.log(data)
+    // let { contacts } = data
+    if (data) {
+      return data.contacts.map((contact: any) => (<Contact key={contact.id} id={contact.id} />))
     }
   }
   
   return (
     <div>
       <h2>Contacts</h2>
-      {props.data.loading && <p>Loading contacts ...</p>}
+      {loading && <p>Loading contacts ...</p>}
       {renderContacts()}
     </div>
   )
 }
 
-export default graphql(getContactsQuery)(ContactList)
+export default ContactList

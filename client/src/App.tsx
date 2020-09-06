@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
 import './App.css';
 import AppRouter from './routers/AppRouter';
 import store from './store/store'
 
-export const client = new ApolloClient({
+const client = new ApolloClient({
   uri: 'https://apetsi-contact-book.herokuapp.com/v1/graphql',
   cache: new InMemoryCache(),
 })
@@ -22,4 +22,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default App

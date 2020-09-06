@@ -1,6 +1,7 @@
-import { gql } from "apollo-boost";
+// import { gql } from "apollo-boost";
+import { gql } from '@apollo/client'
 
-const getContactsQuery = gql`
+const GET_CONTACTS_QUERY = gql`
   {
     contacts {
       id
@@ -12,7 +13,7 @@ const getContactsQuery = gql`
   }
 `
 
-const addContactMutation = gql`
+const ADD_CONTACT_MUTATION = gql`
   mutation(
     $firstName: String!,
     $lastName: String!,
@@ -21,7 +22,7 @@ const addContactMutation = gql`
     $email3: String,
     $phone: Int!,
     $phone2: Int,
-    $phone3: int,
+    $phone3: Int,
     $twitter: String
   ) {
     insert_contacts_one(object: {
@@ -49,4 +50,4 @@ const addContactMutation = gql`
   }
 `
 
-export { getContactsQuery, addContactMutation }
+export { GET_CONTACTS_QUERY, ADD_CONTACT_MUTATION }
