@@ -123,7 +123,7 @@ const DELETE_CONTACT = gql`
 `
 
 const DELETE_CONTACTS = gql`
-  mutation() {
+  mutation {
     delete_contacts(where: {}) {
       affected_rows
     }
