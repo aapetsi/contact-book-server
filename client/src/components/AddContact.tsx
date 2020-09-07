@@ -3,7 +3,6 @@ import { Form, Input, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import '../styles/AddContact.css'
-// import * as ContactActions from '../store/actions'
 import {ADD_CONTACT_MUTATION, GET_CONTACTS_QUERY} from '../queries/queries'
 
 const layout = {
@@ -26,23 +25,25 @@ const AddContact = (props: any) => {
   const [addContact] = useMutation(ADD_CONTACT_MUTATION)
   // const dispatch = useDispatch()
   const history = useHistory()
+
+  const formatNumber = (phone: String): Number => {
+    return Number(phone.split(',').splice(1).join(''))
+  }
   
   const onFinish = async (values: any) => {
     console.log('Success:', values)
     
     try {
-      addContact({variables: {...values, phone: 276202069}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
+      addContact({
+        variables: {
+          ...values, 
+          phone: formatNumber(values.phone), 
+          phone2: formatNumber(values.phone2), phone3: formatNumber(values.phone3)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]
+      })
+      history.push('/')
     } catch (error) {
       console.log(error)
     }
-    // try {
-    //   let res = await props.mutate({firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter})
-    // console.log(res)
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    // dispatch(ContactActions.addContact(values))
-    history.push('/')
   }
 
   const onFinishFailed = (errorInfo: any) => {

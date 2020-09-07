@@ -23,7 +23,7 @@ const validateMessages = {
 
 const EditContact = (props: any) => {
   const [updateContact] = useMutation(UPDATE_CONTACT)
-  const {loading, data, error} = useQuery(GET_CONTACT_QUERY)
+  const {loading, data} = useQuery(GET_CONTACT_QUERY)
 
   const history = useHistory()
 

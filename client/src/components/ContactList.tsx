@@ -1,12 +1,10 @@
 import React from 'react'
-import {useQuery} from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Contact from './Contact'
 import { GET_CONTACTS_QUERY } from '../queries/queries'
 
 
 const ContactList = (props: any) => {
-  // const dispatch = useDispatch()
-  // const contactState = useSelector((state) => state.contacts)
   const { loading, error, data } = useQuery(GET_CONTACTS_QUERY)
   const renderContacts = () => {
     if (data) {
@@ -19,7 +17,7 @@ const ContactList = (props: any) => {
       <h2>Contacts</h2>
       {loading && <p>Loading contacts ...</p>}
       {renderContacts()}
-      {error && error.message}
+      <p>{error && error.message}</p>
     </div>
   )
 }
