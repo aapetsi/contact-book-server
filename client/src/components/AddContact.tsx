@@ -1,10 +1,9 @@
 import React from 'react'
 import { Form, Input, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { useMutation } from '@apollo/client'
 import '../styles/AddContact.css'
-import * as ContactActions from '../store/actions'
+// import * as ContactActions from '../store/actions'
 import {ADD_CONTACT_MUTATION, GET_CONTACTS_QUERY} from '../queries/queries'
 
 const layout = {
@@ -25,24 +24,24 @@ const validateMessages = {
 
 const AddContact = (props: any) => {
   const [addContact] = useMutation(ADD_CONTACT_MUTATION)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const history = useHistory()
   
   const onFinish = async (values: any) => {
     console.log('Success:', values)
-    let {firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter} = values
-   try {
-    addContact({variables: {firstName, lastName, email, email2, email3, phone: 276202069, phone2, phone3, twitter}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
-   } catch (error) {
-     console.log(error)
-   }
+    
+    try {
+      addContact({variables: {...values, phone: 276202069}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
+    } catch (error) {
+      console.log(error)
+    }
     // try {
     //   let res = await props.mutate({firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter})
     // console.log(res)
     // } catch (error) {
     //   console.log(error)
     // }
-    dispatch(ContactActions.addContact(values))
+    // dispatch(ContactActions.addContact(values))
     history.push('/')
   }
 
@@ -143,7 +142,7 @@ const AddContact = (props: any) => {
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Add Contact
         </Button>
       </Form.Item>
     </Form>

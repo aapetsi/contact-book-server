@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {useQuery} from '@apollo/client'
 import Contact from './Contact'
 import { GET_CONTACTS_QUERY } from '../queries/queries'
@@ -7,12 +7,10 @@ import { GET_CONTACTS_QUERY } from '../queries/queries'
 const ContactList = (props: any) => {
   // const dispatch = useDispatch()
   // const contactState = useSelector((state) => state.contacts)
-  const { loading, data } = useQuery(GET_CONTACTS_QUERY)
+  const { loading, error, data } = useQuery(GET_CONTACTS_QUERY)
   const renderContacts = () => {
-    // console.log(data)
-    // let { contacts } = data
     if (data) {
-      return data.contacts.map((contact: any) => (<Contact key={contact.id} id={contact.id} />))
+      return data.contacts.map((contact: any) => (<Contact key={contact.id} {...contact} />))
     }
   }
   
@@ -21,6 +19,7 @@ const ContactList = (props: any) => {
       <h2>Contacts</h2>
       {loading && <p>Loading contacts ...</p>}
       {renderContacts()}
+      {error && error.message}
     </div>
   )
 }

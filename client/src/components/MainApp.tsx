@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from 'antd'
+import { Typography, Button } from 'antd'
 import ContactList from './ContactList'
 
 const { Title } = Typography
@@ -9,6 +9,7 @@ const MainApp = () => {
     <div>
       <Title>Contact Book</Title>
       <ContactList />
+      <Button type="primary">Delete All Contacts</Button>
     </div>
   )
 }
