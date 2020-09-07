@@ -19,7 +19,25 @@ const Contact = (props: any) => {
   return (
     <div>
       <h2>Contact component</h2>
-      <Link to={`/edit/${id}`}>Edit contact</Link>
+      <Link 
+        // to={`/edit/${id}`
+        to={{
+          pathname: `/edit/${id}`,
+          state: {
+            firstName: props.firstName,
+            lastName: props.lastName,
+            email: props.email,
+            email2: props.email2,
+            email3: props.email3,
+            phone: props.phone,
+            phone2: props.phone2,
+            phone3: props.phone3,
+            twitter: props.twitter
+          }
+        }}
+      >
+        Edit contact
+      </Link>
       <Button onClick={handleClick} type='primary'>Delete Contact</Button>
     </div>
   )

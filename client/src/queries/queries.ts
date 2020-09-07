@@ -14,7 +14,7 @@ const GET_CONTACTS_QUERY = gql`
 `
 
 const GET_CONTACT_QUERY = gql`
-  query($id: ID!) {
+  query($id: Int!) {
     contacts_by_pk(id: $id) {
       firstName,
       lastName,

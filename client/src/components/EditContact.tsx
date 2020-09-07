@@ -23,8 +23,8 @@ const validateMessages = {
 
 const EditContact = (props: any) => {
   const [updateContact] = useMutation(UPDATE_CONTACT)
-  const {loading, data} = useQuery(GET_CONTACT_QUERY)
-
+  const {loading, data, error} = useQuery(GET_CONTACT_QUERY, {variables: {id: Number(props.match.params.id)}})
+  
   const history = useHistory()
 
   const onFinish = async (values: any) => {
@@ -62,8 +62,10 @@ const EditContact = (props: any) => {
             message: 'Please input contact\'s first name!'
           }]
         }
+        // initialValue={data}
+        initialValue={data?.contacts_by_pk?.firstName}
       >
-        <Input className='input' defaultValue={data?.firstName} />
+        <Input className='input'   />
       </Form.Item>
 
       <Form.Item
@@ -73,8 +75,9 @@ const EditContact = (props: any) => {
           required: true,
           message: 'Please input contact\'s last name!'
         }]}
+        initialValue={data?.contacts_by_pk?.lastName}
       >
-        <Input className='input' defaultValue={data?.lastName} />
+        <Input className='input'  />
       </Form.Item>
 
       <Form.Item
@@ -84,22 +87,25 @@ const EditContact = (props: any) => {
           required: true,
           type: 'email'
         }]}
+        initialValue={data?.contacts_by_pk?.email}
       >
-        <Input className='input' defaultValue={data?.email} />
+        <Input className='input'  />
       </Form.Item>
 
       <Form.Item
         label='Alternate Email'
         name='email2'
+        initialValue={data?.contacts_by_pk?.email2}
       >
-        <Input className='input' defaultValue={data?.email2} />
+        <Input className='input'  />
       </Form.Item>
 
       <Form.Item
         label='Alternate Email'
         name='email3'
+        initialValue={data?.contacts_by_pk?.email3}
       >
-        <Input className='input' defaultValue={data?.email3} />
+        <Input className='input'  />
       </Form.Item>
 
       <Form.Item
@@ -109,32 +115,36 @@ const EditContact = (props: any) => {
           required: true,
           message: 'Please input contact\'s phone number!',
         }]}
+        initialValue={data?.contacts_by_pk?.phone}
       >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' defaultValue={data?.phone} />
+        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' />
       </Form.Item>
 
       <Form.Item
         label='Home Phone Number'
         name='phone2'
         rules={[{}]}
+        initialValue={data?.contacts_by_pk?.phone2}
       >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' defaultValue={data?.phone2} />
+        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456'  />
       </Form.Item>
 
       <Form.Item
         label='Work Phone Number'
         name='phone3'
         rules={[{}]}
+        initialValue={data?.contacts_by_pk?.phone3}
       >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' defaultValue={data?.phone3} />
+        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456'  />
       </Form.Item>
 
       <Form.Item
         label='Twitter Username'
         name='twitter'
         rules={[{}]}
+        initialValue={data?.contacts_by_pk?.twitter}
       >
-        <Input className='input' defaultValue={data?.twitter} />
+        <Input className='input'  />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

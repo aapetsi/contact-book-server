@@ -26,8 +26,14 @@ const AddContact = (props: any) => {
   // const dispatch = useDispatch()
   const history = useHistory()
 
-  const formatNumber = (phone: String): Number => {
-    return Number(phone.split(',').splice(1).join(''))
+  const formatNumber = (phone: String, phone2: String, phone3: String ) => {
+    phone2 = phone2 === undefined ? '0' : phone2
+    phone3 = phone3 === undefined ? '0' : phone2
+    return {
+      phone: Number(phone.substr(1,9)),
+      phone2: Number(phone2.substr(1,9)),
+      phone3: Number(phone3.substr(1,9))
+    }
   }
   
   const onFinish = async (values: any) => {
@@ -36,9 +42,9 @@ const AddContact = (props: any) => {
     try {
       addContact({
         variables: {
-          ...values, 
-          phone: formatNumber(values.phone), 
-          phone2: formatNumber(values.phone2), phone3: formatNumber(values.phone3)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]
+          ...values,
+          ...formatNumber(values.phone, values.phone2, values.phone3) 
+        }, refetchQueries: [{query: GET_CONTACTS_QUERY}]
       })
       history.push('/')
     } catch (error) {
