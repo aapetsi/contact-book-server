@@ -18,7 +18,6 @@ const Contact = (props: any) => {
   }
   return (
     <div>
-      <h2>Contact component</h2>
       <Link 
         // to={`/edit/${id}`
         to={{

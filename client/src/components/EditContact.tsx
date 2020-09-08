@@ -22,16 +22,33 @@ const validateMessages = {
 }
 
 const EditContact = (props: any) => {
-  const [updateContact] = useMutation(UPDATE_CONTACT)
+  const [updateContact] = useMutation(UPDATE_CONTACT, {variables: {id: Number(props.match.params.id)}})
   const {loading, data, error} = useQuery(GET_CONTACT_QUERY, {variables: {id: Number(props.match.params.id)}})
+
+  const formatNumber = (phone: Number): String | undefined => {
+    if (!phone) return undefined
+    return '0' + String(phone)
+  }
+
+  const {firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter} = props.location.state
   
+  const formatPhone = (phone: String, phone2: String, phone3: String ) => {
+    phone2 = phone2 === undefined ? '0' : phone2
+    phone3 = phone3 === undefined ? '0' : phone2
+    return {
+      phone: Number(phone.substr(1,9)),
+      phone2: Number(phone2.substr(1,9)),
+      phone3: Number(phone3.substr(1,9))
+    }
+  }
+
   const history = useHistory()
 
   const onFinish = async (values: any) => {
     console.log('Success:', values)
 
     try {
-      updateContact({variables: {...values, phone: 276202069}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
+      updateContact({variables: {...values, ...formatPhone(values.phone, values.phone2, values.phone3)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
     } catch (error) {
       console.log(error)
     }
@@ -63,7 +80,7 @@ const EditContact = (props: any) => {
           }]
         }
         // initialValue={data}
-        initialValue={data?.contacts_by_pk?.firstName}
+        initialValue={firstName}
       >
         <Input className='input'   />
       </Form.Item>
@@ -75,7 +92,7 @@ const EditContact = (props: any) => {
           required: true,
           message: 'Please input contact\'s last name!'
         }]}
-        initialValue={data?.contacts_by_pk?.lastName}
+        initialValue={lastName}
       >
         <Input className='input'  />
       </Form.Item>
@@ -87,7 +104,7 @@ const EditContact = (props: any) => {
           required: true,
           type: 'email'
         }]}
-        initialValue={data?.contacts_by_pk?.email}
+        initialValue={email}
       >
         <Input className='input'  />
       </Form.Item>
@@ -95,7 +112,7 @@ const EditContact = (props: any) => {
       <Form.Item
         label='Alternate Email'
         name='email2'
-        initialValue={data?.contacts_by_pk?.email2}
+        initialValue={email2}
       >
         <Input className='input'  />
       </Form.Item>
@@ -103,7 +120,7 @@ const EditContact = (props: any) => {
       <Form.Item
         label='Alternate Email'
         name='email3'
-        initialValue={data?.contacts_by_pk?.email3}
+        initialValue={email3}
       >
         <Input className='input'  />
       </Form.Item>
@@ -115,7 +132,7 @@ const EditContact = (props: any) => {
           required: true,
           message: 'Please input contact\'s phone number!',
         }]}
-        initialValue={data?.contacts_by_pk?.phone}
+        initialValue={formatNumber(phone)}
       >
         <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' />
       </Form.Item>
@@ -124,7 +141,7 @@ const EditContact = (props: any) => {
         label='Home Phone Number'
         name='phone2'
         rules={[{}]}
-        initialValue={data?.contacts_by_pk?.phone2}
+        initialValue={formatNumber(phone2)}
       >
         <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456'  />
       </Form.Item>
@@ -133,7 +150,7 @@ const EditContact = (props: any) => {
         label='Work Phone Number'
         name='phone3'
         rules={[{}]}
-        initialValue={data?.contacts_by_pk?.phone3}
+        initialValue={formatNumber(phone3)}
       >
         <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456'  />
       </Form.Item>
@@ -142,7 +159,7 @@ const EditContact = (props: any) => {
         label='Twitter Username'
         name='twitter'
         rules={[{}]}
-        initialValue={data?.contacts_by_pk?.twitter}
+        initialValue={twitter}
       >
         <Input className='input'  />
       </Form.Item>

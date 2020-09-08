@@ -74,7 +74,7 @@ mutation {
 */
 const UPDATE_CONTACT = gql`
   mutation(
-    $id: ID!
+    $id: Int!
     $firstName: String!,
     $lastName: String!,
     $email: String!,
