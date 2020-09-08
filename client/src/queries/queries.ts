@@ -8,7 +8,12 @@ const GET_CONTACTS_QUERY = gql`
       firstName,
       lastName,
       email,
-      phone
+      email2,
+      email3,
+      phone,
+      phone2,
+      phone3,
+      twitter
     }
   }
 `

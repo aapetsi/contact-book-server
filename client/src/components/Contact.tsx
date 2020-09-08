@@ -9,7 +9,7 @@ import { DELETE_CONTACT } from '../queries/queries'
 // }
 
 const Contact = (props: any) => {
-  const {id} = props
+  const {id, firstName, lastName, email, email2, email3, phone, phone2, phone3} = props
   const [deleteContact] = useMutation(DELETE_CONTACT)
 
   const handleClick = (e: any) => {
@@ -18,6 +18,17 @@ const Contact = (props: any) => {
   }
   return (
     <div>
+      <div className='contact-info'>
+        <p>{firstName.toUpperCase()} {lastName.toUpperCase()}</p>
+        <div className="email">
+          <span>Email: {email}</span>
+          <span>Email: {email2}</span>
+        </div>
+   
+        phone: {phone}
+        phone2: {phone2}
+        phone3: {phone3}
+      </div>
       <Link 
         // to={`/edit/${id}`
         to={{
@@ -37,7 +48,7 @@ const Contact = (props: any) => {
       >
         Edit contact
       </Link>
-      <Button onClick={handleClick} type='primary'>Delete Contact</Button>
+      <Button onClick={handleClick} type='primary' danger>Delete Contact</Button>
     </div>
   )
 }

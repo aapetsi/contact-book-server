@@ -4,7 +4,7 @@ import {Row, Col} from 'antd'
 import Contact from './Contact'
 import { GET_CONTACTS_QUERY } from '../queries/queries'
 
-const style = { background: '#0092ff', padding: '8px 0' };
+const style = { background: '#e3e3e3', padding: '8px 8px' };
 
 const ContactList = (props: any) => {
   const { loading, error, data } = useQuery(GET_CONTACTS_QUERY)
