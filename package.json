@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "app.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aapetsi/contact-book-server.git"
+  },
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js",
