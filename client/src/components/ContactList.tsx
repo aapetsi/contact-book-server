@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import {Row, Col} from 'antd'
+import {Row, Col, Divider} from 'antd'
 import Contact from './Contact'
 import { GET_CONTACTS_QUERY } from '../queries/queries'
 
@@ -11,13 +11,11 @@ const ContactList = (props: any) => {
   const renderContacts = () => {
     if (data) {
       return data.contacts.map((contact: any) => (
-        <Row gutter={[16,24]}>
-          <Col key={contact.id} span={6} className='gutter-row' >
-            <div style={style}>
-              <Contact {...contact} />
-            </div>
-          </Col>
-        </Row>
+        <Col key={contact.id} span={6} className='gutter-row' >
+          <div style={style}>
+            <Contact {...contact} />
+          </div>
+        </Col>
       ))
     }
   }
@@ -26,7 +24,9 @@ const ContactList = (props: any) => {
     <div>
       <h2>Contacts</h2>
       {loading && <p>Loading contacts ...</p>}
-      {renderContacts()}
+      <Row gutter={[16, 24]}>
+        {renderContacts()}
+      </Row>
       <p>{error && error.message}</p>
     </div>
   )
