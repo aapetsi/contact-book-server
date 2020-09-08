@@ -114,7 +114,7 @@ const UPDATE_CONTACT = gql`
 `
 
 const DELETE_CONTACT = gql`
-  mutation ($id: ID!) {
+  mutation ($id: Int!) {
     delete_contacts_by_pk(id: $id) {
       firstName,
       lastName,

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import { useMutation } from '@apollo/client'
-import { DELETE_CONTACT } from '../queries/queries'
+import { DELETE_CONTACT, GET_CONTACTS_QUERY } from '../queries/queries'
 import '../styles/Contact.css'
 // interface ContactProps {
 //   id: string
@@ -18,7 +18,7 @@ const Contact = (props: any) => {
 
   const handleClick = (e: any) => {
     console.log(e)
-    deleteContact({ variables: {id}})
+    deleteContact({ variables: {id: Number(id)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
   }
   return (
     <div className='contact-info'>
