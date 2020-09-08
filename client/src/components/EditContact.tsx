@@ -3,7 +3,7 @@ import { Form, Input, Button, Spin } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 import '../styles/AddContact.css'
-import { UPDATE_CONTACT, GET_CONTACTS_QUERY, GET_CONTACT_QUERY } from "../queries/queries";
+import { UPDATE_CONTACT, GET_CONTACT_QUERY } from "../queries/queries";
 
 const layout = {
   labelCol: { span: 8 },
@@ -23,24 +23,23 @@ const validateMessages = {
 
 const EditContact = (props: any) => {
   const [updateContact] = useMutation(UPDATE_CONTACT)
-  const {loading, data, error} = useQuery(GET_CONTACT_QUERY, {variables: {id: Number(props.match.params.id)}})
+  const {loading} = useQuery(GET_CONTACT_QUERY, {variables: {id: Number(props.match.params.id)}})
 
   const formatNumber = (phone: Number): String | undefined => {
     if (!phone) return undefined
     return '0' + String(phone)
   }
 
-  const {firstName, lastName, email, email2, email3, phone, phone2, phone3, twitter} = props.location.state
-  
-  const formatPhone = (phone: String, phone2: String, phone3: String ) => {
-    phone2 = phone2 === undefined ? '0' : phone2
-    phone3 = phone3 === undefined ? '0' : phone2
-    return {
-      phone: Number(phone.substr(1,9)),
-      phone2: Number(phone2.substr(1,9)),
-      phone3: Number(phone3.substr(1,9))
-    }
-  }
+  const {
+    firstName, 
+    lastName, 
+    email, 
+    email2, 
+    email3, 
+    phone, 
+    phone2, 
+    phone3, 
+    twitter} = props.location.state
 
   const history = useHistory()
 

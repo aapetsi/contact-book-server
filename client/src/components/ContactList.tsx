@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import {Row, Col, Divider} from 'antd'
+import {Row, Col} from 'antd'
 import Contact from './Contact'
 import { GET_CONTACTS_QUERY } from '../queries/queries'
 
