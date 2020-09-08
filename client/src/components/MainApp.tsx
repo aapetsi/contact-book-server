@@ -11,7 +11,7 @@ const MainApp = () => {
   const [deleteContacts] = useMutation(DELETE_CONTACTS)
 
   const handleClick = () => {
-    deleteContacts({variables: {where: {}}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
+    deleteContacts({variables: {}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
   }
   return (
     <div className='app-container'>
