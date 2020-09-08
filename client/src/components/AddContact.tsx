@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client'
 import '../styles/AddContact.css'
 import { ADD_CONTACT_MUTATION, GET_CONTACTS_QUERY } from '../queries/queries'
 
+
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 }
@@ -22,7 +23,6 @@ const validateMessages = {
 
 const AddContact = (props: any) => {
   const [addContact] = useMutation(ADD_CONTACT_MUTATION)
-  // const dispatch = useDispatch()
   const history = useHistory()
 
   const formatNumber = (phone: String, phone2: String, phone3: String ) => {
@@ -43,121 +43,125 @@ const AddContact = (props: any) => {
         variables: {
           ...values,
           ...formatNumber(values.phone, values.phone2, values.phone3) 
-        }, refetchQueries: [{query: GET_CONTACTS_QUERY}]
+        }, 
+        refetchQueries: [{ query: GET_CONTACTS_QUERY }]
       })
       history.push('/')
     } catch (error) {
       console.log(error)
+      alert(error)
     }
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
-
+  
   return (
-    <Form
-      {...layout}
-      name='nest-messages'
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      validateMessages={validateMessages}
-    >
-      <Form.Item
-        label='First Name'
-        name='firstName'
-        rules={[{
-          required: true,
-          message: 'Please input contact\'s first name!'
-        }]}
+    <React.Fragment>
+      <Form
+        {...layout}
+        name='nest-messages'
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        validateMessages={validateMessages}
       >
-        <Input className='input'/>
-      </Form.Item>
+        <Form.Item
+          label='First Name'
+          name='firstName'
+          rules={[{
+            required: true,
+            message: 'Please input contact\'s first name!'
+          }]}
+        >
+          <Input className='input'/>
+        </Form.Item>
 
-      <Form.Item
-        label='Last Name'
-        name='lastName'
-        rules={[{
-          required: true,
-          message: 'Please input contact\'s last name!'
-        }]}
-      >
-        <Input className='input' />
-      </Form.Item>
+        <Form.Item
+          label='Last Name'
+          name='lastName'
+          rules={[{
+            required: true,
+            message: 'Please input contact\'s last name!'
+          }]}
+        >
+          <Input className='input' />
+        </Form.Item>
 
-      <Form.Item
-        label='Email'
-        name='email'
-        rules={[{
-          required: true,
-          type: 'email'
-        }]}
-      >
-        <Input className='input' />
-      </Form.Item>
+        <Form.Item
+          label='Email'
+          name='email'
+          rules={[{
+            required: true,
+            type: 'email'
+          }]}
+        >
+          <Input className='input' />
+        </Form.Item>
 
-      <Form.Item
-        label='Alternate Email'
-        name='email2'
-        rules={[{
-          type: 'email'
-        }]}
-      >
-        <Input className='input' />
-      </Form.Item>
+        <Form.Item
+          label='Alternate Email'
+          name='email2'
+          rules={[{
+            type: 'email'
+          }]}
+        >
+          <Input className='input' />
+        </Form.Item>
 
-      <Form.Item
-        label='Alternate Email'
-        name='email3'
-        rules={[{
-          type: 'email'
-        }]}
-      >
-        <Input className='input' />
-      </Form.Item>
+        <Form.Item
+          label='Alternate Email'
+          name='email3'
+          rules={[{
+            type: 'email'
+          }]}
+        >
+          <Input className='input' />
+        </Form.Item>
 
-      <Form.Item
-        label='Phone Number'
-        name='phone'
-        rules={[{
-          required: true,
-          message: 'Please input contact\'s phone number!',
-        }]}
-      >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' />
-      </Form.Item>
+        <Form.Item
+          label='Phone Number'
+          name='phone'
+          rules={[{
+            required: true,
+            message: 'Please input contact\'s phone number!',
+          }]}
+        >
+          <Input className='input' pattern='^0[2,5]\d{8}' placeholder='0241234567' />
+        </Form.Item>
 
-      <Form.Item
-        label='Home Phone Number'
-        name='phone2'
-        rules={[{}]}
-      >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' />
-      </Form.Item>
+        <Form.Item
+          label='Home Phone Number'
+          name='phone2'
+          rules={[{}]}
+        >
+          <Input className='input' pattern='^0[2,5]\d{8}' placeholder='0241234567' />
+        </Form.Item>
 
-      <Form.Item
-        label='Work Phone Number'
-        name='phone3'
-        rules={[{}]}
-      >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' />
-      </Form.Item>
+        <Form.Item
+          label='Work Phone Number'
+          name='phone3'
+          rules={[{}]}
+        >
+          <Input className='input' pattern='^0[2,5]\d{8}' placeholder='0241234567' />
+        </Form.Item>
 
-      <Form.Item
-        label='Twitter Username'
-        name='twitter'
-        rules={[{}]}
-      >
-        <Input className='input' />
-      </Form.Item>
+        <Form.Item
+          label='Twitter Username'
+          name='twitter'
+          rules={[{}]}
+        >
+          <Input className='input' />
+        </Form.Item>
 
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Add Contact
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            Add Contact
+          </Button>
+        </Form.Item>
+      </Form>
+    </React.Fragment>  
   )
 }
 

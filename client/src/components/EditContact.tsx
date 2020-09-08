@@ -1,9 +1,9 @@
 import React from 'react'
-import { Form, Input, Button, Spin } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import '../styles/AddContact.css'
-import { UPDATE_CONTACT, GET_CONTACT_QUERY } from "../queries/queries";
+import { UPDATE_CONTACT } from "../queries/queries";
 
 const layout = {
   labelCol: { span: 8 },
@@ -16,14 +16,12 @@ const tailLayout = {
 
 const validateMessages = {
   types: {
-    // eslint-disable-next-line
-    email: '${label} is not valid!'
+    email: 'Email is not valid!'
   }
 }
 
 const EditContact = (props: any) => {
   const [updateContact] = useMutation(UPDATE_CONTACT)
-  const {loading} = useQuery(GET_CONTACT_QUERY, {variables: {id: Number(props.match.params.id)}})
 
   const formatNumber = (phone: Number): String | undefined => {
     if (!phone) return undefined
@@ -47,16 +45,16 @@ const EditContact = (props: any) => {
     console.log('Success:', values)
 
     try {
-      updateContact({variables: {...values, id: Number(props.match.params.id), pk_columns: Number(props.match.params.id)}})
-      // updateContact({
-      //   variables: {
-      //     pk_columns: Number(props.match.params.id),
-      //     ...values, ...formatPhone(values.phone, values.phone2, values.phone3)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
+      updateContact({
+        variables: {
+          ...values, 
+          id: Number(props.match.params.id), 
+          pk_columns: Number(props.match.params.id)}
+      })
+      history.push('/')
     } catch (error) {
       console.log(error)
     }
-
-    history.push('/')
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -64,7 +62,7 @@ const EditContact = (props: any) => {
   }
 
   return (
-    <Spin spinning={loading}>
+    <React.Fragment>
       <Form
         {...layout}
         name='nest-messages'
@@ -116,6 +114,9 @@ const EditContact = (props: any) => {
         label='Alternate Email'
         name='email2'
         initialValue={email2}
+        rules={[{
+          type: 'email'
+        }]}
       >
         <Input className='input'  />
       </Form.Item>
@@ -124,6 +125,9 @@ const EditContact = (props: any) => {
         label='Alternate Email'
         name='email3'
         initialValue={email3}
+        rules={[{
+          type: 'email'
+        }]}
       >
         <Input className='input'  />
       </Form.Item>
@@ -137,7 +141,7 @@ const EditContact = (props: any) => {
         }]}
         initialValue={formatNumber(phone)}
       >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456' />
+        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='0241234567' />
       </Form.Item>
 
       <Form.Item
@@ -146,7 +150,7 @@ const EditContact = (props: any) => {
         rules={[{}]}
         initialValue={formatNumber(phone2)}
       >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456'  />
+        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='0241234567'  />
       </Form.Item>
 
       <Form.Item
@@ -155,7 +159,7 @@ const EditContact = (props: any) => {
         rules={[{}]}
         initialValue={formatNumber(phone3)}
       >
-        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='024123456'  />
+        <Input className='input' pattern='^0[2,5]\d{8}' placeholder='0241234567'  />
       </Form.Item>
 
       <Form.Item
@@ -174,8 +178,7 @@ const EditContact = (props: any) => {
       </Form.Item>
 
     </Form>
-  
-    </Spin>
+  </React.Fragment>
 )
 }
 

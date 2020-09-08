@@ -29,7 +29,7 @@ const ContactList = () => {
         <Row gutter={[16, 24]}>
           {renderContacts()}
         </Row>
-        <Text type='danger'>{error && error.message}. Check your connection and try again</Text>
+        {error && <Text type='secondary'>Check your connection and try again</Text>}
       </Spin>
       
     </div>
