@@ -23,7 +23,7 @@ const Contact = (props: any) => {
   return (
     <div className='contact-info'>
       <div>
-        <p>{firstName.toUpperCase()} {lastName.toUpperCase()}</p>
+        <h2>{firstName.toUpperCase()} {lastName.toUpperCase()}</h2>
         <div className="details">
           <span>Email: {email}</span>
           <span>Email: {email2}</span>
