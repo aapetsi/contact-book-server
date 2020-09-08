@@ -1,12 +1,14 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import {Row, Col} from 'antd'
+import { Row, Col, Typography, Spin } from 'antd'
 import Contact from './Contact'
 import { GET_CONTACTS_QUERY } from '../queries/queries'
 
+const {Text} = Typography
+
 const style = { background: '#e3e3e3', padding: '8px 8px' };
 
-const ContactList = (props: any) => {
+const ContactList = () => {
   const { loading, error, data } = useQuery(GET_CONTACTS_QUERY)
   const renderContacts = () => {
     if (data) {
@@ -23,11 +25,13 @@ const ContactList = (props: any) => {
   return (
     <div>
       <h2>Contacts</h2>
-      {loading && <p>Loading contacts ...</p>}
-      <Row gutter={[16, 24]}>
-        {renderContacts()}
-      </Row>
-      <p>{error && error.message}</p>
+      <Spin spinning={loading}>
+        <Row gutter={[16, 24]}>
+          {renderContacts()}
+        </Row>
+        <Text type='danger'>{error && error.message}. Check your connection and try again</Text>
+      </Spin>
+      
     </div>
   )
 }

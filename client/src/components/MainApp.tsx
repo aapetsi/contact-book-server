@@ -18,7 +18,7 @@ const MainApp = () => {
     <div className='app-container'>
       <Title className='app-title'>Contact Book</Title>
       <ContactList />
-      <Button onClick={handleClick} type="primary">Delete All Contacts</Button>
+      <Button style={{marginTop: '15px'}} onClick={handleClick} type="primary">Delete All Contacts</Button>
     </div>
   )
 }
