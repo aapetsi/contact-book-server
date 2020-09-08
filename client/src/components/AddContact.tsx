@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import '../styles/AddContact.css'
-import {ADD_CONTACT_MUTATION, GET_CONTACTS_QUERY} from '../queries/queries'
+import { ADD_CONTACT_MUTATION, GET_CONTACTS_QUERY } from '../queries/queries'
 
 const layout = {
   labelCol: { span: 8 },
@@ -16,8 +16,7 @@ const tailLayout = {
 
 const validateMessages = {
   types: {
-    // eslint-disable-next-line
-    email: '${label} is not valid!',
+    email: 'Email is not valid!',
   }
 }
 
@@ -101,6 +100,9 @@ const AddContact = (props: any) => {
       <Form.Item
         label='Alternate Email'
         name='email2'
+        rules={[{
+          type: 'email'
+        }]}
       >
         <Input className='input' />
       </Form.Item>
@@ -108,6 +110,9 @@ const AddContact = (props: any) => {
       <Form.Item
         label='Alternate Email'
         name='email3'
+        rules={[{
+          type: 'email'
+        }]}
       >
         <Input className='input' />
       </Form.Item>
