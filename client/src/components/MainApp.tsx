@@ -13,6 +13,7 @@ const MainApp = () => {
   const handleClick = () => {
     deleteContacts({variables: {}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
   }
+  
   return (
     <div className='app-container'>
       <Title className='app-title'>Contact Book</Title>

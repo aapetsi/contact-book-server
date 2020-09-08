@@ -2,10 +2,13 @@
   height: 30px;
   line-height: 30px;
   margin-bottom: 16px;
-  background: #f8f8f8;
+  background: #f8f8f887;
+  font-weight: bold;
+  font-size: large;
 }
 
 .nav a {
   line-height: 40px;
   padding: 0 8px;
+  text-decoration: underline;
 }
