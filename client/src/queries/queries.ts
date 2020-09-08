@@ -70,15 +70,10 @@ const ADD_CONTACT_MUTATION = gql`
     }
   }
 `
-/*
-mutation {
-  update_contacts_by_pk(pk_columns: {id: 3}, _set: {firstName: "rasta"}) {
-  	firstName  
-  }
-}
-*/
+
 const UPDATE_CONTACT = gql`
   mutation(
+    $pk_columns: Int!
     $id: Int!
     $firstName: String!,
     $lastName: String!,

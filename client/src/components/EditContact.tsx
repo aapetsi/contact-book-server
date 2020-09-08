@@ -22,7 +22,7 @@ const validateMessages = {
 }
 
 const EditContact = (props: any) => {
-  const [updateContact] = useMutation(UPDATE_CONTACT, {variables: {id: Number(props.match.params.id)}})
+  const [updateContact] = useMutation(UPDATE_CONTACT)
   const {loading, data, error} = useQuery(GET_CONTACT_QUERY, {variables: {id: Number(props.match.params.id)}})
 
   const formatNumber = (phone: Number): String | undefined => {
@@ -48,7 +48,11 @@ const EditContact = (props: any) => {
     console.log('Success:', values)
 
     try {
-      updateContact({variables: {...values, ...formatPhone(values.phone, values.phone2, values.phone3)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
+      updateContact({variables: {...values, id: Number(props.match.params.id), pk_columns: Number(props.match.params.id)}})
+      // updateContact({
+      //   variables: {
+      //     pk_columns: Number(props.match.params.id),
+      //     ...values, ...formatPhone(values.phone, values.phone2, values.phone3)}, refetchQueries: [{query: GET_CONTACTS_QUERY}]})
     } catch (error) {
       console.log(error)
     }
